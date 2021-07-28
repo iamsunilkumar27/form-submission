@@ -1,16 +1,44 @@
 import { PureComponent } from "react";
-
+import axios from "axios";
 class Signup extends PureComponent {
-    handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(this.state);
-    };
-     
-    state= {};
-    handleChange = (e) => {
-        this.setState({[e.target.name]:e.target.value})
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            contact: '',
+            email: '',
+            address: '',
+            pincode: '',
+            age: '',
+            visitedon: '',
+
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
-  
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const data = this.state;
+            console.log(data);
+            await axios.post(`http://localhost:3000/api/v1/users`, data);
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
+
+
+    handleChange(event) {
+        this.setState(
+            { [event.target.name]: event.target.value }
+        )
+    }
+
 
     render() {
 
@@ -51,7 +79,7 @@ class Signup extends PureComponent {
                                 </div>
                                 <div className="col-12">
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" id="gridCheck"  />
+                                        <input className="form-check-input" type="checkbox" id="gridCheck" />
                                         <label className="form-check-label" htmlFor="gridCheck">
                                             Check me out
                                         </label>
